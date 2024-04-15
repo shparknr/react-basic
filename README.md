@@ -1,70 +1,143 @@
-# Getting Started with Create React App
+# 1. 리액트 프로젝트 초기세팅
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1.1. 리액트 프로젝트 생성
 
-## Available Scripts
+- `npx create-react-app ./`
+- `yarn create react-app ./`
+- 중 하나 선택
 
-In the project directory, you can run:
+## 1.2. 파일 정리
 
-### `yarn start`
+- .gitignore # dependencies 안에 .env 추가
+- src/test 파일들 삭제 (src폴더안 test 파일들 삭제)
+- App.css 파일 삭제
+- index.js 파일 정리
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```js
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+```
 
-### `yarn test`
+-index.css 파일 수정 (덮어쓰기, html font-size 16px)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline-style: none;
+}
+ul,
+li {
+  list-style: none;
+}
+a {
+  color: #000000;
+  text-decoration: none;
+}
+img {
+  vertical-align: middle;
+  border: 0;
+}
+html {
+  font-size: 10px;
+}
+body {
+  font-family: "Pretendard-Regular", sans-serif;
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: -0.23px;
+  word-break: keep-all;
+  color: #000000;
+}
+```
 
-### `yarn build`
+## 1.3. React 개발 편의 도구 설치
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- React 크롬 개발도구 [Devtools](https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=ko)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- VSCode React Plugin (ES7+ React/Redux/React-Native snippets ) 설치
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 1.4. normalize.css 설정 (css초기화)
 
-### `yarn eject`
+- `yarn add normalize.css`
+- src/index.js 파일에 import "normalize.css"; 추가
+  Alt Shift O (index.css위에 설치하기위해)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 1.5. scss, emotion.js 설치
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- `yarn add sass`
+- `yarn add @emotion/react`
+- `yarn add @emotion/styled"`
+- npm 의 경우 yarn add 대신 npm i
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 1.6. ESLint, Pretteir 설정
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Extension에서 확장 설치
 
-## Learn More
+- .prettierrc.json 파일 생성 후 아래 내용 붙혀넣기 (package.json과 같은 위치)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```json
+{
+  "singleQuote": false,
+  "semi": true,
+  "useTabs": false,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "printWidth": 80,
+  "arrowParens": "avoid",
+  "endOfLine": "auto"
+}
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- ESLint 설정
 
-### Code Splitting
+  - `yarn add eslint --dev`
+  - (`npm i eslint --dev`)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  - `yarn eslint --init`
+  - (`npx eslint --init`)
 
-### Analyzing the Bundle Size
+```txt
+To check syntax and find problems 선택
+JavaScript modules (import/export) 선택
+React 선택
+Does your project use TypeScript? No 선택
+Where does your code run? Browser 선택
+What format do you want your config file to be in? JavaScript 선택
+Would you like to install them now? Yes 선택
+Which package manager do you want to use? npm 선택
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- ESLint와 Prettier를 연결하여 ESLint 설정
 
-### Making a Progressive Web App
+  - `yarn add eslint-config-prettier --save-dev`
+  - (`npm i eslint-config-prettier --save-dev`)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  - .eslintrc.js 아래 해당부분 덮어쓰기 (`extends`, `rules`)
 
-### Advanced Configuration
+```js
+extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier"
+],
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+rules: {
+  "react/react-in-jsx-scope": "off",
+  "react/prop-types": "off",
+  "no-unused-vars": "off",
+},
+```
 
-### Deployment
+- 바벨에 의한 경고
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+  - `yarn add @babel/plugin-proposal-private-property-in-object --dev`
+  - `npm install
 
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- App.js 수정 후 yarn start
