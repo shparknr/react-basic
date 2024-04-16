@@ -147,6 +147,7 @@ export default Main;
 import React from "react";
 
 const Main = ({ title, children }) => {
+  //const Main = props => {
   // const { title, children } = { title: props.title, children: props.children };
   // const { title, children } = props;
 
