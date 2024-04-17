@@ -1,14 +1,33 @@
 import React, { useState } from "react";
 
-const Main = () => {
-  // username 상태
-  const [username, setUsername] = useState("");
+const initState = {
+  username: "",
+  message: "",
+};
 
-  // target : html 태그
-  const onChangeUsername = event => {
-    setUsername(event.target.value);
-    console.log(event.target.value);
+const Main = () => {
+  const [memberInfo, setMemberInfo] = useState(initState);
+  const { username, message } = memberInfo;
+
+  const onChange = event => {
+    const nextMemberInfo = {
+      ...memberInfo, // 기존의 정보 내용을 이자리에 복사한 뒤
+      [event.target.name]: event.target.value, // 원하는 값을 덮어 씌우기
+    };
+    setMemberInfo(nextMemberInfo);
   };
+
+  const onClick = () => {
+    alert(`${username}: ${message}`);
+    setMemberInfo(initState);
+  };
+
+  const onKeyPress = event => {
+    if (event.key === "Enter") {
+      onClick();
+    }
+  };
+
   return (
     <div>
       <h1>이벤트 연습</h1>
@@ -18,8 +37,19 @@ const Main = () => {
         placeholder="사용자명"
         value={username}
         // event 항목, onChange= {()=>{}}
-        onChange={onChangeUsername}
+        onChange={onChange}
       />
+      <br />
+      <input
+        type="text"
+        name="message"
+        placeholder="아무거나 입력해 보새요"
+        value={message}
+        onChange={onChange}
+        onKeyUp={onKeyPress}
+      />
+      <br />
+      <button onClick={onClick}>확인</button>
     </div>
   );
 };
