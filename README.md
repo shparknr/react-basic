@@ -132,3 +132,64 @@ export default Main;
 - 각 항목을 더블클릭했을 때 화면에서 사라지는 기능 구현
 - 불변성을 유지하면서 업데이트 filter 함수 사용
 - filter 함수는 배열에서 특정 조건을 만족하는 원소들만 분류
+
+```js
+import React, { useState } from "react";
+
+const initState = [
+  { id: 1, username: "알라딘" },
+  { id: 2, username: "지니" },
+  { id: 3, username: "홍길동" },
+  { id: 4, username: "임꺽정" },
+  { id: 5, username: "미키마우스" },
+];
+
+const Main = () => {
+  // member 목록 상태
+  const [members, setMembers] = useState(initState);
+  // id 상태
+  const [nextId, setNextId] = useState(6);
+  // input 상태
+  const [username, setUsername] = useState("");
+
+  // input 이벤트 핸들러
+  const onChange = e => {
+    setUsername(e.target.value);
+  };
+
+  const onClick = () => {
+    // console.log("사용자 이름 추가할거임");
+    // 배열의 내장 함수 concat을 사용하여 새로운 항목을 추가한 배열로 만든다.
+    const nextMembers = members.concat({
+      id: nextId,
+      username: username,
+    });
+    setNextId(nextId + 1);
+    setMembers(nextMembers);
+    setUsername("");
+  };
+
+  // remove 이벤트 핸들러
+  const onRemove = id => {
+    const nextMembers = members.filter(member => member.id !== id);
+    setMembers(nextMembers);
+  };
+
+  return (
+    <div>
+      <input onChange={onChange} value={username} />
+      <button onClick={onClick}>사용자 추가</button>
+
+      <ul>
+        {members.map(member => (
+          <li key={member.id} onDoubleClick={() => onRemove(member.id)}>
+            {member.username}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default Main;
+```
