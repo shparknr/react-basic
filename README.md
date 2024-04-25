@@ -35,6 +35,7 @@ const Axios = () => {
         <textarea
           rows={7}
           readOnly={true}
+          // JSON.stringify() : 객체를 json 으로 바꿔준다.
           value={JSON.stringify(data, null, 2)}
         />
       )}
